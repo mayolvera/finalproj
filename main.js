@@ -35,44 +35,68 @@ $(document).ready(function () {
 // Story paths
 var story = {
 	intro: {
-		prompt: 'Choose something to drink.',
+		prompt: "Let’s say you’re pretty wealthy. You’re looking to move into a condo and decide 25 Central Park West is the place for you.",
 		options: [{
-			name: 'Coffee',
-			path: 'coffee'
+			name: "Look for apartment listings.",
+			path: "next"
+    }]
+	},
+	next: {
+		prompt: "There’s a unit for sale: 21J! The listing doesn’t have a price but in doing research, you stumble upon the comparative file above. You notice the GROSS SQUARE FEET of the unit is 3,393 sq. ft. How much money should you anticipate spending?",
+		options: [{
+			name: "More than $1 million",
+			path: "more"
     }, {
-			name: 'Tea',
-			path: 'tea'
+			name: "Less than $1 million",
+			path: "less_rip"
     }]
 	},
-	coffee: {
-		prompt: 'Right. Stay wired. Choose something to write with.',
+	more: {
+		prompt: "Good call. The Department of Finance values each square foot of the building at $393.08. That means the unit is valued at $1,333,720. Should you bring a bit more money just in case the Department of Finance undervalued the building?",
 		options: [{
-			name: 'Marker',
-			path: 'marker'
-    }, {
-			name: 'Pen',
-			path: 'pen'
+			name: "Just to be safe!",
+			path: "safe"
+		}, {
+			name: "Nah, that sum is probably right.",
+			path: "nah_rip"
     }]
 	},
-	pen: {
-		prompt: 'Right. You are not a monster. You are done.',
+	safe: {
+		prompt: "It does seem like it’ll go for more than its market value. How much more though?",
 		options: [{
-			name: 'Start over.',
-			path: 'intro'
+			name: "$18 million more",
+			path: "eighteen"
+		}, {
+			name: "$8 million more",
+			path: "eight_rip"
     }]
 	},
-	tea: {
-		prompt: 'Tea is not strong enough.',
+	eighteen: {
+		prompt: "Okay, $18 million more might be overkill... It’s actually $17,416,280 more. That’s right; it’s going for $18,750,000. That’s 1305.84% more than the unit’s market value! Good thing you brought enough. Congratulations on your new condo!",
 		options: [{
-			name: 'Try again.',
-			path: 'intro'
+			name: "Buy it again?",
+			path: "intro"
     }]
 	},
-	marker: {
-		prompt: 'You might be a monster.',
+	less_rip: {
+		prompt: "Oh no! Even by the Department of Finance’s standards, you’re a bit low. They value each square foot of the building at $393.08. Maybe you should look at other apartments.",
 		options: [{
-			name: 'Try Again',
-			path: 'intro'
+			name: "Try again.",
+			path: "next"
+    }]
+	},
+	eight_rip: {
+		prompt: "You’re still about $10 million short. The unit actually costs $18,750,000. That’s 1305.84% more than the unit’s market value! You could save yourself the money and buy both of us a beer, instead.",
+		options: [{
+			name: "Try again.",
+			path: "next"
+    }]
+	},
+	nah_rip: {
+		prompt: "Well, that’s embarrassing. You showed up a few million dollars short.",
+		options: [{
+			name: "Try again.",
+			path: "next"
     }]
 	}
 }
@@ -116,98 +140,5 @@ $(document).ready(function () {
 	display_scenario({
 		name: null,
 		path: 'intro'
-	});
-});
-
-
-
-
-
-
-//Second Story
-
-var story2 = {
-	intro2: {
-		prompt: 'Choose a fruit',
-		options: [{
-			name: 'Banana',
-			path: 'banana'
-    }, {
-			name: 'Apple',
-			path: 'apple'
-    }]
-	},
-	banana: {
-		prompt: 'Right. Bananas are fundamentally superior. Now, choose a gum flavor.',
-		options: [{
-			name: 'Fruity',
-			path: 'fruit'
-    }, {
-			name: 'Minty',
-			path: 'mint'
-    }]
-	},
-	mint: {
-		prompt: 'Right. You are also not a monster. Congratulations.',
-		options: [{
-			name: 'Start over',
-			path: 'intro2'
-    }]
-	},
-	apple: {
-		prompt: 'Apples are in no way better than bananas.',
-		options: [{
-			name: 'Try again',
-			path: 'intro2'
-    }]
-	},
-	fruit: {
-		prompt: 'Gum should never be fruity. Definitely a monster.',
-		options: [{
-			name: 'Try Again',
-			path: 'intro2'
-    }]
-	}
-}
-
-function display_scenario2(chosen_option2) {
-	var option2_name = chosen_option2.name;
-	var option2_path = chosen_option2.path;
-	var scenario2 = story2[option2_path];
-
-	$('#prompt2').empty();
-	$('#options2').empty();
-
-	if (option2_name) {
-		$('<p>').html('You have chosen <b>' + option2_name + '</b>').appendTo('#prompt2');
-	}
-
-	$('<p>').html(scenario2.prompt).appendTo('#prompt2');
-
-	function add_option_button(index) {
-		if (index === scenario2.options.length) {
-			return;
-		}
-
-		var option2 = scenario2.options[index];
-
-		$('<button>')
-			.html(option2.name)
-			.click(function (e) {
-
-				e.preventDefault();
-				display_scenario2(option2);
-			})
-			.appendTo('#options2');
-
-		add_option_button(index + 1);
-	}
-	add_option_button(0);
-}
-
-$(document).ready(function () {
-	display_scenario2({
-		name: null,
-		path: 'intro2'
 	});
 });
